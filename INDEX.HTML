@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Budget & Daily Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">BM</div>
+        <div>
+          <h1>Budget Manager — Daily Expense Tracker</h1>
+          <p class="lead">Set budgets, add expenses, visualize where your money goes. Data stored locally in your
+            browser.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="exportBtn" class="btn-ghost">Export CSV</button>
+        <button id="resetBtn" class="btn-ghost">Reset All</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div>
+              <label>Monthly Budget (PKR)</label>
+              <div style="display:flex;gap:8px;align-items:center">
+                <input id="budgetInput" type="number" placeholder="Enter budget amount" />
+                <button id="saveBudget">Save</button>
+              </div>
+            </div>
+            <div style="width:260px">
+              <label>Spending Progress</label>
+              <div class="progress-bar" style="margin-top:8px">
+                <div class="progress" id="spendProgress"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats" style="margin-bottom:10px">
+            <div class="stat">
+              <h3>Budget</h3>
+              <p id="budgetValue">PKR 0</p>
+            </div>
+            <div class="stat">
+              <h3>Spent</h3>
+              <p id="spentValue">PKR 0</p>
+            </div>
+            <div class="stat">
+              <h3>Remaining</h3>
+              <p id="remainingValue">PKR 0</p>
+            </div>
+          </div>
+
+          <hr style="border:none;border-top:1px solid var(--glass);margin:12px 0" />
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:220px">
+              <label>Expense Title</label>
+              <input id="title" placeholder="Lunch, Groceries..." />
+            </div>
+            <div style="width:140px">
+              <label>Amount (PKR)</label>
+              <input id="amount" type="number" placeholder="0.00" />
+            </div>
+            <div style="width:160px">
+              <label>Category</label>
+              <select id="category">
+                <option value="food">Food</option>
+                <option value="transport">Transport</option>
+                <option value="rent">Rent/Bills</option>
+                <option value="shopping">Shopping</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div style="width:160px">
+              <label>Date</label>
+              <input id="date" type="date" />
+            </div>
+            <div style="align-self:end">
+              <button id="addBtn">Add Expense</button>
+            </div>
+          </div>
+
+          <div class="list" id="expensesList">
+            <!-- items appended here -->
+          </div>
+
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 8px 0">Transactions</h3>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <input id="search" placeholder="Search title or category" />
+            <select id="filterCat">
+              <option value="all">All categories</option>
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+              <option value="rent">Rent/Bills</option>
+              <option value="shopping">Shopping</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="other">Other</option>
+            </select>
+            <input id="fromDate" type="date" />
+            <input id="toDate" type="date" />
+            <button id="applyFilters" class="btn-ghost">Apply</button>
+            <button id="clearFilters" class="btn-ghost">Clear</button>
+          </div>
+          <div id="txList" style="max-height:260px;overflow:auto"></div>
+        </div>
+
+      </main>
+
+      <aside>
+        <div class="card">
+          <h3 style="margin-top:0">Charts</h3>
+          <canvas id="pieChart" style="width:100%;height:220px;margin-top:6px"></canvas>
+          <canvas id="lineChart" style="width:100%;height:220px;margin-top:12px"></canvas>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3 style="margin-top:0">Quick actions</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+            <button id="addSample" class="btn-ghost">Add Sample Data</button>
+            <button id="downloadJSON" class="btn-ghost">Download Backup (JSON)</button>
+            <input id="importFile" type="file" accept="application/json" />
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Tip: All data is stored locally — to keep it safe, export backup regularly.
+    </footer>
+  </div>
+  <script src="js.js"></script>
+</body>
+
+</html>
